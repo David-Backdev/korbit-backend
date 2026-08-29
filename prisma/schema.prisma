@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+
+model Categoria {
+  id_categoria Int    @id @default(autoincrement())
+  nombre       String @unique @db.VarChar(100)
+
+  productos Producto[]
+
+  @@map("categoria")
+}
+
+model Marca {
+  id_marca Int    @id @default(autoincrement())
+  nombre   String @unique @db.VarChar(100)
+
+  productos Producto[]
+
+  @@map("marca")
+}
+
+model Proveedor {
+  id_proveedor Int    @id @default(autoincrement())
+  nit          String @unique @db.VarChar(50)
+
+  productos Producto[]
+
+  @@map("proveedor")
+}
+
+// Stub temporal: solo trae lo que aparece en este diagrama.
+// Falta reconciliarlo con el modelo real del módulo de Auth.
+model Usuario {
+  id_usuario Int @id @default(autoincrement())
+
+  productos_registrados Producto[]
+
+  @@map("usuario")
+}
+
+model Producto {
+  id_producto         Int      @id @default(autoincrement())
+  nombre              String   @db.VarChar(150)
+  descripcion         String?  @db.Text
+  sku                 String   @unique @db.VarChar(50)
+  codigo_barras       String?  @unique @db.VarChar(100)
+  precio_compra       Decimal  @db.Decimal(12, 2)
+  precio_venta        Decimal  @db.Decimal(12, 2)
+  stock_inicial       Int
+  stock_disponible    Int      @default(0)
+  stock_minimo        Int      @default(0)
+  estado              Boolean  @default(true)
+  fecha_creacion      DateTime @default(now()) @db.Timestamptz
+  fecha_actualizacion DateTime @updatedAt @db.Timestamptz
+
+  id_categoria        Int
+  id_marca            Int
+  id_proveedor        Int?
+  id_usuario_registro Int
+
+  categoria Categoria  @relation(fields: [id_categoria], references: [id_categoria])
+  marca     Marca      @relation(fields: [id_marca], references: [id_marca])
+  proveedor Proveedor? @relation(fields: [id_proveedor], references: [id_proveedor])
+  usuario   Usuario    @relation(fields: [id_usuario_registro], references: [id_usuario])
+
+  alerta_stock AlertaStock?
+
+  @@unique([nombre, id_marca], map: "uc_producto_nombre_marca")
+  @@map("producto")
+}
+
+model AlertaStock {
+  id_alerta        Int      @id @default(autoincrement())
+  id_producto      Int      @unique
+  stock_registrado Int
+  fecha_generacion DateTime @default(now()) @db.Timestamptz
+  estado_alerta    Boolean  @default(true)
+
+  producto Producto @relation(fields: [id_producto], references: [id_producto])
+
+  @@map("alerta_stock")
+}
