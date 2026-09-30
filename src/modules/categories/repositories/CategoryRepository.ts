@@ -32,7 +32,6 @@ export class CategoryRepository {
     });
   }
 
-    //Aquí la función para validar si existen categorias duplicadas antes de guardar
 
   async findByName(nombre: string): Promise<Categoria | null> {
     return this.prisma.categoria.findFirst({
@@ -45,16 +44,16 @@ export class CategoryRepository {
     });
 
     /**
-     * Para borrar una categoria, primero necesitamos validar que 
+     * Para borrar una categoria, primero necesitamos validar que
      * no tenga un producto vinculado a ella. Para esto tenemos que dividir
-     * la función en dos partes: 
-     * 
+     * la función en dos partes:
+     *
      * 1) una función que cuente la cantidad de productos vinculados
-     * 2) una función que borre la categoria en sí. 
+     * 2) una función que borre la categoria en sí.
      * En service nos encargamos la lógica
      */
 
-  
+
   }
   async countProductsByCategoryId(id: number): Promise<number>{
     return this.prisma.producto.count({
@@ -62,7 +61,7 @@ export class CategoryRepository {
     });
 
   }
-  
+
   async deleteCategoryById (id: number): Promise<void> {
     await this.prisma.categoria.delete({
       where: {id_categoria: id}
@@ -70,4 +69,5 @@ export class CategoryRepository {
   }
 
 }
+
 
