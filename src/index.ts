@@ -1,11 +1,11 @@
 import express, {Request, Response} from 'express';
-import dotenv from 'dotenv';
+import { config } from "./config/env.config";
+import  categoryRoutes from "./modules/categories/routes/categoryRoutes";
+import { errorHandler } from './shared/middleware/errorHandlerMiddleware';
 
 
-dotenv.config();
 
 const app=express();
-const PORT=process.env.PORT || 3000;
 
 // Middleware para procesar JSON en las peticiones
 app.use(express.json());
@@ -19,6 +19,11 @@ app.get('/api/health', (req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(` Servidor corriendo en http://localhost:${PORT}`);
+app.use("/api/v1/categories", categoryRoutes)
+//app.use("/api/v1/", brandRoutes)
+
+app.use(errorHandler)
+
+app.listen(config.server.port, () => {
+  console.log(`Servidor corriendo en http://localhost:${config.server.port} [${config.env}]`);
 });
