@@ -1,7 +1,8 @@
 import express, {Request, Response} from 'express';
 import { config } from "./config/env.config";
 import  categoryRoutes from "./modules/categories/routes/categoryRoutes";
-import { errorHandler } from './shared/middleware/errorHandlerMiddleware';
+import brandRoutes from "./modules/brands/routes/brandRoutes";
+import { errorHandler } from './shared/middlewares/errorHandlerMiddleware';
 
 
 
@@ -20,7 +21,7 @@ app.get('/api/health', (req: Request, res: Response) => {
 });
 
 app.use("/api/v1/categories", categoryRoutes)
-//app.use("/api/v1/", brandRoutes)
+app.use("/api/v1/brands", brandRoutes)
 
 app.use(errorHandler)
 

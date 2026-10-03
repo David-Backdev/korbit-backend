@@ -4,7 +4,7 @@ import { prisma } from "../../../config/prisma";
 import { CategoryRepository } from "../repositories/CategoryRepository";
 import { CategoryService } from "../services/categoryServices";
 import { CategoryController } from "../controllers/CategoryController";
-import { validate } from "../../../shared/middleware/validateMiddleware";
+import { validate } from "../../../shared/middlewares/validateMiddleware";
 import { categorySchema } from "../validators/categorySchema"
 
 const router = Router();
