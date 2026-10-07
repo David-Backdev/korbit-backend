@@ -15,7 +15,7 @@ export class CategoryService{
         const cleanName = data.nombre.trim(); //Limpiamos el nombre de espacios en blanco al inicio y al final
 
         //Verificamos que no exista previamente una categoria con el mismo nombre
-        const existingCategory = await this.categoryRepository.findByName(cleanName); 
+        const existingCategory = await this.categoryRepository.findByName(cleanName);
 
         //Si existe, lanzamos un error de conflicto
         if( existingCategory){
@@ -47,7 +47,7 @@ export class CategoryService{
         const updatedCategory = await this.categoryRepository.updateCategory(id, { nombre: cleanName });
         return updatedCategory;
     }
-    
+
     async findCategoryById(id: number): Promise<Categoria> {
 
         const category = await this.categoryRepository.findCategoryById(id);
