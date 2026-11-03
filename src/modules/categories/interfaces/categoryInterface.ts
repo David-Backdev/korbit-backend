@@ -1,6 +1,6 @@
 import { Categoria} from "../../../generated/prisma/client";
 
-export type CategoryDTO = Categoria; 
+export type CategoryDTO = Categoria;
 
 export interface CreateCategoryDTO {
 
@@ -10,7 +10,7 @@ export interface CreateCategoryDTO {
 
 export interface UpdateCategoryDTO {
 
-  nombre: string; 
+  nombre: string;
 }
 
 

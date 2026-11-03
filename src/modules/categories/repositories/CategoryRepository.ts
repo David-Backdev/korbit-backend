@@ -1,37 +1,41 @@
-import { PrismaClient, Categoria} from "../../../generated/prisma/client";
-import { CreateCategoryDTO, UpdateCategoryDTO } from "../interfaces/categoryInterface";
+import { PrismaClient, Categoria } from "../../../generated/prisma/client";
+import {
+  CreateCategoryDTO,
+  UpdateCategoryDTO,
+} from "../interfaces/categoryInterface";
 
 export class CategoryRepository {
-
-  constructor (private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient) {}
 
   async createCategory(data: CreateCategoryDTO): Promise<Categoria> {
     return this.prisma.categoria.create({
       data: {
         nombre: data.nombre,
-      }
+      },
     });
   }
 
-  async updateCategory(id: number,data:UpdateCategoryDTO ): Promise<Categoria> {
+  async updateCategory(
+    id: number,
+    data: UpdateCategoryDTO,
+  ): Promise<Categoria> {
     return this.prisma.categoria.update({
-      where: {id_categoria: id},
-      data:{nombre: data.nombre}
+      where: { id_categoria: id },
+      data: { nombre: data.nombre },
     });
   }
 
   async findAllCategories(): Promise<Categoria[]> {
     return this.prisma.categoria.findMany({
-      orderBy:{ nombre: 'asc',}
+      orderBy: { nombre: "asc" },
     });
   }
 
-  async findCategoryById(id: number): Promise<Categoria | null>{
+  async findCategoryById(id: number): Promise<Categoria | null> {
     return this.prisma.categoria.findUnique({
-      where: {id_categoria: id}
+      where: { id_categoria: id },
     });
   }
-
 
   async findByName(nombre: string): Promise<Categoria | null> {
     return this.prisma.categoria.findFirst({
@@ -52,22 +56,16 @@ export class CategoryRepository {
      * 2) una función que borre la categoria en sí.
      * En service nos encargamos la lógica
      */
-
-
   }
-  async countProductsByCategoryId(id: number): Promise<number>{
+  async countProductsByCategoryId(id: number): Promise<number> {
     return this.prisma.producto.count({
-      where: {id_categoria: id },
+      where: { id_categoria: id },
     });
-
   }
 
-  async deleteCategoryById (id: number): Promise<void> {
+  async deleteCategoryById(id: number): Promise<void> {
     await this.prisma.categoria.delete({
-      where: {id_categoria: id}
+      where: { id_categoria: id },
     });
   }
-
 }
-
-
