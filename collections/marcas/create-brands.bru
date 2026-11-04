@@ -1,0 +1,23 @@
+meta {
+  name: create-brands
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/v1/brands
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "Asus"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

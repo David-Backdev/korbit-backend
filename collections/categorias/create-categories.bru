@@ -1,13 +1,19 @@
 meta {
-  name: test1|
+  name: create-categories
   type: http
   seq: 1
 }
 
-get {
-  url: http://localhost:3000/api/healt
-  body: none
+post {
+  url: {{baseUrl}}/api/v1/categories/
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "laptops"
+  }
 }
 
 settings {

@@ -1,0 +1,23 @@
+meta {
+  name: list_by_id
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/categories/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}
